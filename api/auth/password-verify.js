@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { configDotenv } from "dotenv";
 
+
 configDotenv();
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
 

@@ -3,6 +3,7 @@ import User from "../../models/User.js";
 import Otp from "../../models/Otp.js";
 import jwt from "jsonwebtoken";
 import { configDotenv } from "dotenv";
+import sendMail from "../../utils/sendMail.js";
 
 configDotenv();
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
