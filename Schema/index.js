@@ -73,5 +73,5 @@ export const VerifySchema = z.object({
     .regex(/[^a-zA-Z0-9]/, {
       message: "Password must include a special character",
     }),
-  code: z.string().min(6, { message: "Otp must be 6 digit" }),
+  code: z.string().min(6, { message: "Otp must be 6 digit" }).optional(),
 });
