@@ -1,5 +1,5 @@
 import { configDotenv } from "dotenv";
-import { validateLoginFields } from "../../libs/validateVerfiy.js";
+import { validateLoginFields } from "../../libs/validate.js";
 import User from "../../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -46,7 +46,11 @@ export async function Login(req, res) {
     });
     return res.status(202).json({ message: "Logged In Successfully" });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: error?.message });
+    if (error?.name === "ZodValidationError") {
+      return res.status(400).json({ errors: error.errors });
+    }
+    return res
+      .status(500)
+      .json({ error: error.message || "Internal Server Error" });
   }
 }
