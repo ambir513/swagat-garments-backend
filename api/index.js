@@ -1,9 +1,12 @@
 import express from "express";
 import { configDotenv } from "dotenv";
 import authRouter from "./auth/index.js";
+import addressRouter from "./address/index.js";
 import connectMongoDB from "../libs/db.js";
 import { landingJson } from "../libs/landingJson.js";
 import cookieParser from "cookie-parser";
+import { UserDetail } from "../utils/user.js";
+import { UserMiddleware } from "../utils/UserMiddleware.js";
 
 configDotenv();
 const PORT = process.env.PORT || 5000;
@@ -13,6 +16,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/address", addressRouter);
+app.get("/api/v1/user", UserMiddleware, UserDetail);
 app.get("/", landingJson);
 
 connectMongoDB()

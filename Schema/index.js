@@ -35,7 +35,6 @@ export const PasswordSchema = z.object({
     }),
   code: z.string().min(6, { message: "Otp must be 6 digit" }),
 });
-
 export const SignUpSchema = z.object({
   firstName: z.string().min(3, { message: "firstName is required" }),
   lastName: z.string().min(3, { message: "lastname is required" }),
@@ -74,4 +73,25 @@ export const VerifySchema = z.object({
       message: "Password must include a special character",
     }),
   code: z.string().min(6, { message: "Otp must be 6 digit" }).optional(),
+});
+export const AddressSchema = z.object({
+  addressLine1: z.string(),
+  addressLine2: z.string(),
+  addressLine3: z.string(),
+  city: z.string(),
+  state: z.string(),
+  country: z.enum(["India"]),
+  phoneNo: z.string().min(10, { message: "phone no must be 10 digit" }),
+});
+export const EditAddressSchema = z.object({
+  addressLine1: z.string().optional(),
+  addressLine2: z.string().optional(),
+  addressLine3: z.string().optional(),
+  city: z.string().optional(),
+  state: z.string().optional(),
+  country: z.enum(["India"]).optional(),
+  phoneNo: z
+    .string()
+    .min(10, { message: "phone no must be 10 digit" })
+    .optional(),
 });
