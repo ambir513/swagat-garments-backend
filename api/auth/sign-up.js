@@ -1,7 +1,6 @@
 import { validateSignUpFields } from "../../libs/validate.js";
 import User from "../../models/User.js";
 import Otp from "../../models/Otp.js";
-import mailprovider from "mailprovider";
 import jwt from "jsonwebtoken";
 import { configDotenv } from "dotenv";
 
@@ -29,12 +28,7 @@ export async function SignUp(req, res) {
 
     const code = Math.floor(Math.random() * 1000000);
 
-    await mailprovider({
-      displayName: "Swagat Garments",
-      email: email,
-      subject: "OTP send",
-      htmlContent: `Your OTP is ${code}`,
-    });
+    await sendMail(email, "OTP send", code);
 
     await Otp.create({
       email,

@@ -45,7 +45,11 @@ export async function Verify(req, res) {
     });
     return res.status(202).json({ message: "Logged In Successfully" });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: error?.message });
+    if (error?.name === "ZodValidationError") {
+      return res.status(400).json({ errors: error.errors });
+    }
+    return res
+      .status(500)
+      .json({ error: error.message || "Internal Server Error" });
   }
 }
