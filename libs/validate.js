@@ -4,6 +4,7 @@ import {
   VerifySchema,
   AddressSchema,
   EditAddressSchema,
+  addProductSchema,
 } from "../Schema/index.js";
 
 export const validateSignUpFields = (body) => {
@@ -59,5 +60,33 @@ export const validateEditAddressFields = (body) => {
       message: err.message,
     }));
     throw { name: "ZodValidationError", errors: errorMessage };
+  }
+};
+
+/**
+ * This is Vaildation for check the fields of products
+ * This function is like a middlware the check it
+ * @type function
+ */
+export const validateProductFieldsMiddleware = async (req, res, next) => {
+  console.log(req.body);
+
+  const result = addProductSchema.safeParse(req.body);
+  try {
+    if (result.error) {
+      const errorMessage = result?.error?.issues?.map((err) => ({
+        path: err.path.join("."),
+        message: err.message,
+      }));
+      throw { name: "ZodValidationError", errors: errorMessage };
+    }
+    next();
+  } catch (error) {
+    if (error?.name === "ZodValidationError") {
+      return res.status(400).json({ errors: error.errors });
+    }
+    return res
+      .status(500)
+      .json({ error: error.message || "Internal Server Error" });
   }
 };

@@ -12,6 +12,7 @@
   "dependencies": {
     "@paralleldrive/cuid2": "^2.2.2",
     "bcrypt": "^6.0.0",
+    "cloudinary": "^1.41.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
@@ -19,6 +20,8 @@
     "jsonwebtoken": "^9.0.2",
     "mailprovider": "^1.1.2",
     "mongoose": "^8.18.1",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^4.0.0",
     "validator": "^13.15.15",
     "zod": "^4.1.5"
   }
