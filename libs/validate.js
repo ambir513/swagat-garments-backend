@@ -5,6 +5,7 @@ import {
   AddressSchema,
   EditAddressSchema,
   addProductSchema,
+  ReviewProductSchema,
 } from "../Schema/index.js";
 
 export const validateSignUpFields = (body) => {
@@ -53,6 +54,17 @@ export const validateAddressFields = (body) => {
 };
 export const validateEditAddressFields = (body) => {
   const result = EditAddressSchema.safeParse(body);
+
+  if (result.error) {
+    const errorMessage = result?.error?.issues?.map((err) => ({
+      path: err.path.join("."),
+      message: err.message,
+    }));
+    throw { name: "ZodValidationError", errors: errorMessage };
+  }
+};
+export const validateReviewProductFields = (body) => {
+  const result = ReviewProductSchema.safeParse(body);
 
   if (result.error) {
     const errorMessage = result?.error?.issues?.map((err) => ({
