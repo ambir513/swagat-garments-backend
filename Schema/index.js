@@ -156,7 +156,6 @@ export const EditAddressSchema = z.object({
     .max(10, { message: "phone no must be 10 digit only" })
     .optional(),
 });
-
 export const addProductSchema = z.object({
   name: z
     .string()
@@ -198,4 +197,11 @@ export const addProductSchema = z.object({
     .max(10, { message: "size must have at most 10 items" }),
 
   stock: z.number().max(200, { message: "stock must be 200 only" }),
+});
+export const ReviewProductSchema = z.object({
+  rating: z.number(),
+  comments: z
+    .string()
+    .min(5, { message: "comments must be more than 5 character" })
+    .max(200, { message: "comments must be 200 character only" }),
 });

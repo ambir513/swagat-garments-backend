@@ -1,5 +1,7 @@
 import User from "../models/User.js";
 import Address from "../models/Address.js";
+import Product from "../models/Product.js";
+import Review from "../models/Review.js";
 
 export async function UserDetail(req, res) {
   const { _id } = req.user;
@@ -12,9 +14,18 @@ export async function UserDetail(req, res) {
         "_id addressLine1 addressLine2 addressLine3 city state country phoneNo"
       )
       .lean();
+
+    const reviewProductId = await Review.findOne({ userId: _id }).lean();
+
+    const reviewProductDetails = await Product.find({
+      reviews: reviewProductId._id,
+    })
+      .populate({ path: "reviews", select: "rating comments" })
+      .lean();
     return res.status(200).json({
       user: { ...userDetail },
       address: addressDetail,
+      productReview: reviewProductDetails,
     });
   } catch (error) {
     console.log(error);

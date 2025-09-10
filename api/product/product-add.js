@@ -13,10 +13,10 @@ export async function ProductAdd(req, res) {
 
     const isAddedProduct = await Product.create({
       ...req.body,
-      images,
       imageId,
-      thumbnail,
       thumbnailId,
+      thumbnail,
+      images,
     });
     return res.status(202).json({ message: "product add successfully" });
   } catch (error) {
