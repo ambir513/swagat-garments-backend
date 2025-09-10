@@ -9,12 +9,12 @@ export async function UserDetail(req, res) {
       .lean();
     const addressDetail = await Address.find({ userId: _id })
       .select(
-        "_id addressLine1 addressLine2 addressLin3 city state country phoneNo"
+        "_id addressLine1 addressLine2 addressLine3 city state country phoneNo"
       )
       .lean();
     return res.status(200).json({
       user: { ...userDetail },
-      address: { ...addressDetail },
+      address: addressDetail,
     });
   } catch (error) {
     console.log(error);
