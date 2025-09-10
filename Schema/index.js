@@ -5,7 +5,8 @@ export const LoginSchema = z.object({
     .string()
     .min(1, { message: "Email is required" })
     .email({ message: "Invalid email address" })
-    .toLowerCase(),
+    .toLowerCase()
+    .max(50, { message: "email must be in 50 character only" }),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" })
@@ -15,15 +16,17 @@ export const LoginSchema = z.object({
     .regex(/[0-9]/, { message: "Password must include a number" })
     .regex(/[^a-zA-Z0-9]/, {
       message: "Password must include a special character",
-    }),
+    })
+    .max(16, { message: "email must be in 16 character only" }),
 });
 export const PasswordSchema = z.object({
   email: z
     .string()
     .min(1, { message: "Email is required" })
     .email({ message: "Invalid email address" })
-    .toLowerCase(),
-  newPassword: z
+    .toLowerCase()
+    .max(50, { message: "email must be in 50 character only" }),
+  password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" })
     .max(100, { message: "Password must be less than 100 characters" })
@@ -32,17 +35,28 @@ export const PasswordSchema = z.object({
     .regex(/[0-9]/, { message: "Password must include a number" })
     .regex(/[^a-zA-Z0-9]/, {
       message: "Password must include a special character",
-    }),
-  code: z.string().min(6, { message: "Otp must be 6 digit" }),
+    })
+    .max(16, { message: "email must be in 16 character only" }),
+  code: z
+    .string()
+    .min(6, { message: "Otp must be 6 digit" })
+    .max(6, { message: "Otp must be 6 digit" }),
 });
 export const SignUpSchema = z.object({
-  firstName: z.string().min(3, { message: "firstName is required" }),
-  lastName: z.string().min(3, { message: "lastname is required" }),
+  firstName: z
+    .string()
+    .min(3, { message: "firstName is required" })
+    .max(20, { message: "firstName must be in 20 character only" }),
+  lastName: z
+    .string()
+    .min(3, { message: "lastname is required" })
+    .max(20, { message: "lastname must be in 20 character only" }),
   email: z
     .string()
     .min(1, { message: "Email is required" })
     .email({ message: "Invalid email address" })
-    .toLowerCase(),
+    .toLowerCase()
+    .max(50, { message: "email must be in 50 character only" }),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" })
@@ -52,16 +66,24 @@ export const SignUpSchema = z.object({
     .regex(/[0-9]/, { message: "Password must include a number" })
     .regex(/[^a-zA-Z0-9]/, {
       message: "Password must include a special character",
-    }),
+    })
+    .max(16, { message: "email must be in 16 character only" }),
 });
 export const VerifySchema = z.object({
-  firstName: z.string().min(3, { message: "firstName is required" }),
-  lastName: z.string().min(3, { message: "lastname is required" }),
+  firstName: z
+    .string()
+    .min(3, { message: "firstName is required" })
+    .max(20, { message: "firstName must be in 20 character only" }),
+  lastName: z
+    .string()
+    .min(3, { message: "lastname is required" })
+    .max(20, { message: "lastname must be in 20 character only" }),
   email: z
     .string()
     .min(1, { message: "Email is required" })
     .email({ message: "Invalid email address" })
-    .toLowerCase(),
+    .toLowerCase()
+    .max(50, { message: "email must be in 50 character only" }),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" })
@@ -71,27 +93,66 @@ export const VerifySchema = z.object({
     .regex(/[0-9]/, { message: "Password must include a number" })
     .regex(/[^a-zA-Z0-9]/, {
       message: "Password must include a special character",
-    }),
-  code: z.string().min(6, { message: "Otp must be 6 digit" }).optional(),
+    })
+    .max(16, { message: "email must be in 16 character only" }),
+  code: z
+    .string()
+    .min(6, { message: "Otp must be 6 digit" })
+    .max(6, { message: "Otp must be 6 digit" })
+    .optional(),
 });
 export const AddressSchema = z.object({
-  addressLine1: z.string(),
-  addressLine2: z.string(),
-  addressLine3: z.string(),
-  city: z.string(),
-  state: z.string(),
+  addressLine1: z
+    .string()
+    .min(10, { message: "addhresLine1 must be more than 10 character" })
+    .max(100, { message: "addhresLine1 must be in 100 character only" }),
+  addressLine2: z
+    .string()
+    .min(10, { message: "addhresLine2 must be more than 10 character" })
+    .max(100, { message: "addhresLine2 must be in 100 character only" }),
+  addressLine3: z
+    .string()
+    .min(10, { message: "addhresLine3 must be more than 10 character" })
+    .max(100, { message: "addhresLine3 must be in 100 character only" }),
+  city: z
+    .string()
+    .min(3, { message: "City must be more than 3 character" })
+    .max(20, { message: "City must be in 20 character only" }),
+  state: z
+    .string()
+    .min(3, { message: "State must be more than 3 character" })
+    .max(20, { message: "State must be in 20 character only" }),
   country: z.enum(["India"]),
-  phoneNo: z.string().min(10, { message: "phone no must be 10 digit" }),
-});
-export const EditAddressSchema = z.object({
-  addressLine1: z.string().optional(),
-  addressLine2: z.string().optional(),
-  addressLine3: z.string().optional(),
-  city: z.string().optional(),
-  state: z.string().optional(),
-  country: z.enum(["India"]).optional(),
   phoneNo: z
     .string()
     .min(10, { message: "phone no must be 10 digit" })
+    .max(10, { message: "phone no must be 10 digit only" }),
+});
+export const EditAddressSchema = z.object({
+  addressLine1: z
+    .string()
+    .min(10, { message: "addhresLine1 must be more than 10 character" })
+    .max(100, { message: "addhresLine1 must be in 100 character only" }),
+  addressLine2: z
+    .string()
+    .min(10, { message: "addhresLine2 must be more than 10 character" })
+    .max(100, { message: "addhresLine2 must be in 100 character only" }),
+  addressLine3: z
+    .string()
+    .min(10, { message: "addhresLine3 must be more than 10 character" })
+    .max(100, { message: "addhresLine3 must be in 100 character only" }),
+  city: z
+    .string()
+    .min(3, { message: "City must be more than 3 character" })
+    .max(20, { message: "City must be in 20 character only" }),
+  state: z
+    .string()
+    .min(3, { message: "State must be more than 3 character" })
+    .max(20, { message: "State must be in 20 character only" }),
+  country: z.enum(["India"]),
+  phoneNo: z
+    .string()
+    .min(10, { message: "phone no must be 10 digit" })
+    .max(10, { message: "phone no must be 10 digit only" })
     .optional(),
 });
