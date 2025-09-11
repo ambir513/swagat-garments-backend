@@ -1,4 +1,6 @@
+import ColorProduct from "../../models/ColorProduct.js";
 import Product from "../../models/Product.js";
+import Review from "../../models/Review.js";
 
 export async function ProductDelete(req, res) {
   try {
@@ -14,7 +16,14 @@ export async function ProductDelete(req, res) {
       return res.status(404).json({ message: "id is invalid" });
     }
 
-    const isUpdateProduct = await Product.findByIdAndDelete({ _id: id });
+    const isDeleteProduct = await Product.findByIdAndDelete({ _id: id }).lean();
+    const isDeleteReview = await Review.findByIdAndDelete({
+      _id: isDeleteProduct.reviews,
+    });
+    const isDeleteProductColors = await ColorProduct.findByIdAndDelete({
+      _id: isDeleteProduct.colorsId,
+    });
+
     return res
       .status(202)
       .json({ message: "product have deleted successfully" });
