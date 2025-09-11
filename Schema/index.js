@@ -165,18 +165,7 @@ export const addProductSchema = z.object({
   description: z
     .string()
     .min(10, { message: "description must have more than 10 characters" })
-    .max(150, { message: "description must be 150 characters only" }),
-
-  amount: z
-    .string()
-    .min(4, { message: "amount must have more than 4 characters" })
-    .max(20, { message: "amount must be 20 characters only" }),
-
-  price: z
-    .string()
-    .min(4, { message: "price must have more than 4 characters" })
-    .max(20, { message: "price must be 20 characters only" }),
-
+    .max(250, { message: "description must be 250 characters only" }),
   categories: z.enum(["Man", "Woman", "Kids"], {
     required_error: "categories is required",
   }),
@@ -190,13 +179,6 @@ export const addProductSchema = z.object({
     .string()
     .min(2, { message: "bandName must have more than 2 characters" })
     .max(20, { message: "bandName must be 20 characters only" }),
-
-  size: z
-    .array(z.string())
-    .min(1, { message: "size must have at least 1 item" })
-    .max(10, { message: "size must have at most 10 items" }),
-
-  stock: z.number().max(200, { message: "stock must be 200 only" }),
 });
 export const ReviewProductSchema = z.object({
   rating: z.number(),
