@@ -8,20 +8,22 @@ import cookieParser from "cookie-parser";
 import { UserDetail } from "../utils/user.js";
 import { UserMiddleware } from "../utils/UserMiddleware.js";
 import productRouter from "./product/index.js";
+import cors from "cors";
 
 configDotenv();
 const PORT = process.env.PORT || 5000;
 
 const app = express();
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://10.29.72.70:3000"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/address", addressRouter);
-app.use("/api/v1/product", productRouter);
-app.get("/api/v1/user", UserMiddleware, UserDetail);
-app.get("/", landingJson);
-
 connectMongoDB()
   .then((result) => {
     app.listen(PORT, () => {
