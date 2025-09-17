@@ -26,7 +26,7 @@ export const PasswordSchema = z.object({
     .email({ message: "Invalid email address" })
     .toLowerCase()
     .max(50, { message: "email must be in 50 character only" }),
-  password: z
+  newPassword: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" })
     .max(100, { message: "Password must be less than 100 characters" })

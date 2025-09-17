@@ -7,6 +7,7 @@ import sendMail from "../../utils/sendMail.js";
 
 configDotenv();
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
+const OtpCode = () => Math.floor(100000 + Math.random() * 900000);
 
 export async function SignUp(req, res) {
   try {
@@ -27,7 +28,7 @@ export async function SignUp(req, res) {
       return res.status(404).json({ message: "User is already Register" });
     }
 
-    const code = Math.floor(Math.random() * 1000000);
+    const code = OtpCode();
 
     await sendMail(email, "OTP send", code);
 

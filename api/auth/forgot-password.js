@@ -2,6 +2,8 @@ import Otp from "../../models/Otp.js";
 import User from "../../models/User.js";
 import sendMail from "../../utils/sendMail.js";
 
+const OtpCode = () => Math.floor(100000 + Math.random() * 900000);
+
 export async function ForgotPassword(req, res) {
   try {
     const { emailId } = req.params;
@@ -13,8 +15,7 @@ export async function ForgotPassword(req, res) {
       return res.status(404).json({ message: "User is not Exist" });
     }
 
-    const code = Math.floor(Math.random() * 1000000);
-
+    const code = OtpCode();
     await sendMail(emailId, "OTP for forgot password", code);
     await Otp.create({
       email: emailId,
