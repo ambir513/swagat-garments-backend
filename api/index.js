@@ -14,16 +14,16 @@ configDotenv();
 const PORT = process.env.PORT || 5000;
 
 const app = express();
-app.use(
-  cors({
-    origin: ["http://localhost:3000", "http://10.29.72.70:3000"],
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
+app.get("/", landingJson);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/address", addressRouter);
+app.use("/api/v1/product", productRouter);
+app.use("/api/v1/user", UserMiddleware, UserDetail);
+
 connectMongoDB()
   .then((result) => {
     app.listen(PORT, () => {
