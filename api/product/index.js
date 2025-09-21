@@ -10,6 +10,7 @@ import { ProductColorAdd } from "./product-color-add.js";
 import { validateProductFieldsMiddleware } from "../../libs/validate.js";
 import { ProductAddToCart } from "./product-addtocart.js";
 import { ProductFav } from "./product-fav.js";
+import { getProduct } from "./product-limit.js";
 
 const productRouter = Router();
 
@@ -30,5 +31,6 @@ productRouter.delete("/delete/:id", AdminMiddleware, ProductDelete);
 productRouter.post("/review/:id", UserMiddleware, ProductReview);
 productRouter.get("/fav/:id", UserMiddleware, ProductFav);
 productRouter.get("/add/cart/:id", UserMiddleware, ProductAddToCart);
+productRouter.get("/list", UserMiddleware, getProduct);
 
 export default productRouter;
