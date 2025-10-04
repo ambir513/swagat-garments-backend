@@ -11,6 +11,7 @@ import { validateProductFieldsMiddleware } from "../../libs/validate.js";
 import { ProductAddToCart } from "./product-addtocart.js";
 import { ProductFav } from "./product-fav.js";
 import { getProduct } from "./product-limit.js";
+import { ProductSubCategories } from "./Product-SubCategories.js";
 
 const productRouter = Router();
 
@@ -32,5 +33,6 @@ productRouter.post("/review/:id", UserMiddleware, ProductReview);
 productRouter.get("/fav/:id", UserMiddleware, ProductFav);
 productRouter.get("/add/cart/:id", UserMiddleware, ProductAddToCart);
 productRouter.get("/list", UserMiddleware, getProduct);
+productRouter.get("/:subCategories", ProductSubCategories);
 
 export default productRouter;
