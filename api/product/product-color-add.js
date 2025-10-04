@@ -6,30 +6,44 @@ export async function ProductColorAdd(req, res) {
     const { id } = req.params;
 
     if (!id) {
-      return res.status(404).json({ message: "Id is not found" });
+      return res.status(400).json({ message: "Product ID is required" });
     }
-    const isProductExist = await Product.findById({ _id: id });
 
+    const isProductExist = await Product.findById(id);
     if (!isProductExist) {
-      return res.status(404).json({ message: "Id is invalid" });
+      return res.status(404).json({ message: "Invalid Product ID" });
     }
-    const imageId = req.files.map((file) => file.path.split("-")[1]);
-    console.log(imageId);
 
+    // Handle images (if uploaded)
+    let imageId = [];
+    if (req.files && req.files.length > 0) {
+      imageId = req.files.map((file) => file.path.split("-")[1]);
+    }
+
+    // Create new color product
     const ProductColors = await ColorProduct.create({
-      ...req.body,
-      imageId,
+      colorsName: req.body.colorsName,
+      size: req.body.size,
+      amount: req.body.amount,
+      price: req.body.price,
+      stock: req.body.stock,
+      offer: req.body.offer,
+      imagesId: imageId,
     });
+
+    // Push color ref into Product
     const productUpdated = await Product.findByIdAndUpdate(
-      { _id: id },
+      id,
       { $push: { colorsId: ProductColors._id } },
       { new: true }
-    ).populate("colorproduct");
-    return res
-      .status(202)
-      .json({ message: "add color successfully", data: productUpdated });
+    ).populate("colorsId");
+
+    return res.status(201).json({
+      message: "Color variant added successfully",
+      data: productUpdated,
+    });
   } catch (error) {
-    console.log(error);
+    console.error("Error adding product color:", error);
     return res.status(500).json({ message: error?.message });
   }
 }

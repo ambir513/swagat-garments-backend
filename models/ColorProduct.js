@@ -10,9 +10,8 @@ const colorProductSchema = new Schema(
       unique: true,
     },
     colorName: {
-      type: String,
+      type: [String],
       required: true,
-      trim: true,
     },
     offer: {
       type: String,
