@@ -14,24 +14,21 @@ export async function ProductColorAdd(req, res) {
       return res.status(404).json({ message: "Invalid Product ID" });
     }
 
-    // Handle images (if uploaded)
     let imageId = [];
     if (req.files && req.files.length > 0) {
       imageId = req.files.map((file) => file.path.split("-")[1]);
     }
 
-    // Create new color product
     const ProductColors = await ColorProduct.create({
-      colorsName: req.body.colorsName,
-      size: req.body.size,
+      colorName: JSON.parse(req.body.colorsName) || [],
+      size: JSON.parse(req.body.size) || [],
       amount: req.body.amount,
       price: req.body.price,
       stock: req.body.stock,
       offer: req.body.offer,
-      imagesId: imageId,
+      imageId,
     });
 
-    // Push color ref into Product
     const productUpdated = await Product.findByIdAndUpdate(
       id,
       { $push: { colorsId: ProductColors._id } },

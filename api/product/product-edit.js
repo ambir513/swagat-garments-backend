@@ -1,7 +1,7 @@
 import Product from "../../models/Product.js";
 
 export async function ProductEdit(req, res) {
-  try {
+  try { 
     const { id } = req.params;
 
     if (!id) {
