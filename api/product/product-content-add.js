@@ -2,16 +2,25 @@ import Product from "../../models/Product.js";
 
 export async function ProductContentAdd(req, res) {
   try {
-    const body = req.body; // only admin can add product content
+    const body = req.body;
+
+    console.log("Request Body:", body);
 
     const isAddedProduct = await Product.create({
-      ...body,
+      name: body.name,
+      description: body.description,
+      categories: body.categories,
+      subCategories: body.subCategory,
+      bandName: body.bandName,
+      colorsId: [],
     });
-    return res
-      .status(202)
-      .json({ message: "product content add successfully" });
+
+    return res.status(201).json({
+      message: "Product content added successfully",
+      data: isAddedProduct?._id,
+    });
   } catch (error) {
-    console.log(error);
+    console.error("Error adding product:", error);
     return res.status(500).json({ message: error?.message });
   }
 }

@@ -165,12 +165,10 @@ export const addProductSchema = z.object({
   description: z
     .string()
     .min(10, { message: "description must have more than 10 characters" })
-    .max(250, { message: "description must be 250 characters only" }),
-  categories: z.enum(["Man", "Woman", "Kids"], {
-    required_error: "categories is required",
-  }),
+    .max(500, { message: "description must be 500 characters only" }),
+  categories: z.string().min(3, { message: "category is required" }),
 
-  subCategories: z
+  subCategory: z
     .string()
     .min(2, { message: "subCategories must have more than 2 characters" })
     .max(20, { message: "subCategories must be 20 characters only" }),

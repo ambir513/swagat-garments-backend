@@ -20,12 +20,11 @@ const productSchema = new Schema(
       type: String,
       required: true,
       min: [10, "description must be have more than 10 character"],
-      max: [250, "description must be 250 character only"],
+      max: [500, "description must be 500 character only"],
     },
     categories: {
       type: String,
       required: true,
-      enum: ["Man", "Woman", "Kids"],
     },
     subCategories: {
       type: String,
