@@ -14,14 +14,9 @@ export async function getProduct(req, res) {
       .populate(
         "colorsId",
         "_id colorName amount price size stock imageId offer"
-      )
-      .exec();
+      );
 
-    const total = await Product.countDocuments();
     return res.json({
-      page,
-      total,
-      totalPages: Math.ceil(total / limit),
       products,
     });
   } catch (err) {
